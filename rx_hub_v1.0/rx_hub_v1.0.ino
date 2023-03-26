@@ -12,46 +12,29 @@
 SFE_BMP180 bmp180;
 char status;
 double t, p;
+unsigned long lastMillis_bmp180 = 0;
+unsigned long interval_bmp180 = 500;
 
 RF24 radio(9, 10);
-
 const uint64_t rAddress[] = {0x7878787878LL, 0xB3B4B5B6F1LL, 0xB3B4B5B6CDLL, 0xB3B4B5B6A3LL, 0xB3B4B5B60FLL, 0xB3B4B5B605LL};
 char msgBuffer[32];
+unsigned long lastMillis_rx = 0;
+unsigned long interval_rx = 100;
 
 const int ledPower = 5;
 const int ledData = 6;
 unsigned long lastMillis_ledPower = 0;
-unsigned long lastMillis_ledData = 0;
 unsigned long interval_ledPower = 1000;
-unsigned long interval_ledData = 2000;
-
-void receive() {
-  //  Serial.println("void receiver() OK!");
-  uint8_t pipe;
-  if (radio.available(&pipe)) {
-    //Serial.print("radio.available() in pipe ");
-    //Serial.println(pipe);
-    radio.read(&msgBuffer, 32);
-    Serial.print("RX <-- [");
-    Serial.print(msgBuffer);
-    Serial.println("]");
-  } else {
-    //Serial.println("No Radio");
-  }
-}
-//
-//int counter = 0;
-//unsigned long lastMillis = 0;
 
 void setup() {
   Serial.begin(115200);
   Serial.println("Hi! AvaxScript...");
 
   if (bmp180.begin())
-    Serial.println("BMP180 OK!");
+    Serial.println("bmp180 OK!");
   else
   {
-    Serial.println("BMP180 ERROR!");
+    Serial.println("bmp180 ERROR!");
     while (1);
   }
 
@@ -60,47 +43,35 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.setChannel(108);
 
-  // Open up to six pipes for PRX to receive data
-  radio.openReadingPipe(0, (uint64_t*)rAddress[0]);
-  radio.openReadingPipe(1, (uint64_t*)rAddress[1]);
-  radio.openReadingPipe(2, (uint64_t*)rAddress[2]);
-  radio.openReadingPipe(3, (uint64_t*)rAddress[3]);
-  radio.openReadingPipe(4, (uint64_t*)rAddress[4]);
-  radio.openReadingPipe(5, (uint64_t*)rAddress[5]);
+  for (int i = 0; i < 6; i++) {
+    radio.openReadingPipe(i, rAddress[i]);
+  }
 
   radio.startListening();
-  //  lastMillis = millis();
 
   pinMode(ledPower, OUTPUT);
   pinMode(ledData, OUTPUT);
   //  Serial.println("void setup() OK!");
 }
 
-void loop() {
-  // Aqui se puede ubicar cualquier actividad que requiere periodicidad aproximada de 1 segundo
-  //  if ((millis() - lastMillis) > 1000) {
-  //    //Serial.print("millis difference is now ");
-  //    //Serial.println(millis() - lastMillis);
-  //    lastMillis = millis();
-  //
-  //    counter = counter + 1;
-  //    if (counter > 59) {
-  //      counter = 0;
-  //    }
-  //  }
-
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - lastMillis_ledPower >= interval_ledPower) {
-    lastMillis_ledPower = currentMillis;
-    digitalWrite(ledPower, !digitalRead(ledPower));
+void receive() {
+  //    Serial.println("void receiver() OK!")
+  uint8_t pipe;
+  if (radio.available(&pipe)) {
+    //Serial.print("radio.available() in pipe ");
+    //Serial.println(pipe);
+    radio.read(&msgBuffer, 32);
+    Serial.print("RX <-- [");
+    Serial.print(msgBuffer);
+    Serial.println("]");
+    //    digitalWrite(ledData, !digitalRead(ledData));
+  } else {
+    //Serial.println("No Radio");
   }
+  digitalWrite(ledData, !digitalRead(ledData));
+}
 
-  if (currentMillis - lastMillis_ledData >= interval_ledData) {
-    lastMillis_ledData = currentMillis;
-    digitalWrite(ledData, !digitalRead(ledData));
-  }
-
+void sensor_bmp180() {
   status = bmp180.startTemperature();
   if (status != 0)
   {
@@ -115,15 +86,30 @@ void loop() {
         status = bmp180.getPressure(p, t);
         if (status != 0)
         {
+          Serial.print("t_bmp/p_bmp:");
+          Serial.println(String(t) + "/" + String(p));
         }
       }
     }
   }
+}
 
-  Serial.print("t_bmp/p_bmp:");
-  Serial.println(String(t) + "/" + String(p));
+void loop() {
+  unsigned long currentMillis = millis();
 
-  receive();
-  delay(1);
+  if (currentMillis - lastMillis_ledPower >= interval_ledPower) {
+    lastMillis_ledPower = currentMillis;
+    digitalWrite(ledPower, !digitalRead(ledPower));
+  }
+
+  if (currentMillis - lastMillis_bmp180 >= interval_bmp180) {
+    lastMillis_bmp180 = currentMillis;
+    sensor_bmp180();
+  }
+
+  if (currentMillis - lastMillis_rx >= interval_rx) {
+    lastMillis_rx = currentMillis;
+    receive();
+  }
   //  Serial.println("void loop() OK!");
 }
