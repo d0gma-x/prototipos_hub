@@ -43,9 +43,12 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.setChannel(108);
 
-  for (int i = 0; i < 6; i++) {
-    radio.openReadingPipe(i, rAddress[i]);
-  }
+  radio.openReadingPipe(0, (uint64_t*)rAddress[0]);
+  radio.openReadingPipe(1, (uint64_t*)rAddress[1]);
+  radio.openReadingPipe(2, (uint64_t*)rAddress[2]);
+  radio.openReadingPipe(3, (uint64_t*)rAddress[3]);
+  radio.openReadingPipe(4, (uint64_t*)rAddress[4]);
+  radio.openReadingPipe(5, (uint64_t*)rAddress[5]);
 
   radio.startListening();
 

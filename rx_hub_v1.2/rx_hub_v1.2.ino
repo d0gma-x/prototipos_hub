@@ -20,7 +20,7 @@ RF24 radio(9, 10);
 const uint64_t rAddress[] = {0x7878787878LL, 0xB3B4B5B6F1LL, 0xB3B4B5B6CDLL, 0xB3B4B5B6A3LL, 0xB3B4B5B60FLL, 0xB3B4B5B605LL};
 char msgBuffer[32];
 unsigned long lastMillis_rx = 0;
-unsigned long interval_rx = 100;
+unsigned long interval_rx = 50;
 
 const int ledPower = 5;
 const int ledData = 6;
@@ -44,9 +44,12 @@ void setup() {
   radio.setDataRate(RF24_250KBPS);
   radio.setChannel(108);
 
-  for (int i = 0; i < 6; i++) {
-    radio.openReadingPipe(i, rAddress[i]);
-  }
+  radio.openReadingPipe(0, (uint64_t*)rAddress[0]);
+  radio.openReadingPipe(1, (uint64_t*)rAddress[1]);
+  radio.openReadingPipe(2, (uint64_t*)rAddress[2]);
+  radio.openReadingPipe(3, (uint64_t*)rAddress[3]);
+  radio.openReadingPipe(4, (uint64_t*)rAddress[4]);
+  radio.openReadingPipe(5, (uint64_t*)rAddress[5]);
 
   radio.startListening();
 
@@ -65,11 +68,11 @@ void receive() {
     Serial.print("RX <-- [");
     Serial.print(msgBuffer);
     Serial.println("]");
-    //    digitalWrite(ledData, !digitalRead(ledData));
+    digitalWrite(ledData, !digitalRead(ledData));
   } else {
     //Serial.println("No Radio");
   }
-  digitalWrite(ledData, !digitalRead(ledData));
+  //  digitalWrite(ledData, !digitalRead(ledData));
 }
 
 void sensor_bmp180() {
@@ -120,5 +123,4 @@ void loop() {
     lastMillis_rx = currentMillis;
     receive();
   }
-  //  Serial.println("void loop() OK!");
 }
