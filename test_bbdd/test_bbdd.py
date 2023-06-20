@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Cargar el archivo CSV en un DataFrame de Pandas
-df = pd.read_csv('./semana15-06.csv', delimiter=';')
+df = pd.read_csv('./data/semana15-06.csv', delimiter=';')
 
 # Crear una lista de sintaxis SQL para actualizar los valores
 sql_updates = []
