@@ -14,7 +14,7 @@ SFE_BMP180 bmp180;
 char status;
 double t, p;
 unsigned long lastMillis_bmp180 = 0;
-unsigned long interval_bmp180 = 500;
+unsigned long interval_bmp180 = 2000;
 
 RF24 radio(9, 10);
 const uint64_t rAddress[] = {0x7878787878LL, 0xB3B4B5B6F1LL, 0xB3B4B5B6CDLL, 0xB3B4B5B6A3LL, 0xB3B4B5B60FLL, 0xB3B4B5B605LL};
@@ -58,23 +58,6 @@ void setup() {
   //  Serial.println("void setup() OK!");
 }
 
-void receive() {
-  //    Serial.println("void receiver() OK!")
-  uint8_t pipe;
-  if (radio.available(&pipe)) {
-    //Serial.print("radio.available() in pipe ");
-    //Serial.println(pipe);
-    radio.read(&msgBuffer, 32);
-    Serial.print("RX <-- [");
-    Serial.print(msgBuffer);
-    Serial.println("]");
-    digitalWrite(ledData, !digitalRead(ledData));
-  } else {
-    //Serial.println("No Radio");
-  }
-  //  digitalWrite(ledData, !digitalRead(ledData));
-}
-
 void sensor_bmp180() {
   DynamicJsonDocument doc(64);
   char buffer[64];
@@ -105,6 +88,25 @@ void sensor_bmp180() {
     }
   }
 }
+
+void receive() {
+  //    Serial.println("void receiver() OK!")
+  uint8_t pipe;
+  if (radio.available(&pipe)) {
+    //Serial.print("radio.available() in pipe ");
+    //Serial.println(pipe);
+    radio.read(&msgBuffer, 32);
+    Serial.print("RX <-- [");
+    Serial.print(msgBuffer);
+    Serial.println("]");
+    digitalWrite(ledData, !digitalRead(ledData));
+  } else {
+    //Serial.println("No Radio");
+  }
+  //  digitalWrite(ledData, !digitalRead(ledData));
+}
+
+
 
 void loop() {
   unsigned long currentMillis = millis();

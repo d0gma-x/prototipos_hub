@@ -1,0 +1,12 @@
+UPDATE product SET mobile_number='movistar', mobile_provider='991292065' WHERE id='424';
+UPDATE product SET mobile_number='movistar', mobile_provider='935123431' WHERE id='523';
+UPDATE product SET mobile_number='entel', mobile_provider='966464491' WHERE id='612';
+UPDATE product SET mobile_number='movistar', mobile_provider='953136268' WHERE id='618';
+UPDATE product SET mobile_number='movistar', mobile_provider='988427832' WHERE id='685';
+UPDATE product SET mobile_number='entel', mobile_provider='967364564' WHERE id='760';
+UPDATE product SET mobile_number='movistar', mobile_provider='977856327' WHERE id='812';
+UPDATE product SET mobile_number='entel', mobile_provider='966981605' WHERE id='816';
+UPDATE product SET mobile_number='entel', mobile_provider='966981057' WHERE id='817';
+UPDATE product SET mobile_number='entel', mobile_provider='967361631' WHERE id='818';
+UPDATE product SET mobile_number='entel', mobile_provider='966980551' WHERE id='831';
+UPDATE product SET mobile_number='entel', mobile_provider='965464094' WHERE id='832';
