@@ -1,0 +1,5 @@
+id;client;name;mac;date;public_key;private_key;ip;description;uname;os_version;hardware;installed;product_code;mobile_number;mobile_provider;numero_sim;tipo_modulo;tipo_conector;config_script;blacklist
+602;;ecom-144;;;;;;;;;;;;954108232;movistar;;;;;
+623;;ecom-155;;;;;;;;;;;;967785931;movistar;;;;;
+644;;ecom-166;;;;;;;;;;;;966978834;entel;;;;;
+833;;ecom-c34;;;;;;;;;;;;;entel;;;;;

@@ -1,0 +1,13 @@
+id;client;name;mac;date;public_key;private_key;ip;description;uname;os_version;hardware;installed;product_code;mobile_number;mobile_provider;numero_sim;tipo_modulo;tipo_conector;config_script;blacklist
+424;;ecom-11;;;;;;;;;;;;991292065;movistar;;;;;
+523;;ecom-97;;;;;;;;;;;;935123431;movistar;;;;;
+612;;ecom-148;;;;;;;;;;;;966464491;entel;;;;;
+618;;ecom-151;;;;;;;;;;;;953136268;movistar;;;;;
+685;;ecom-194;;;;;;;;;;;;988427832;movistar;;;;;
+760;;ecom-c28;;;;;;;;;;;;967364564;entel;;;;;
+812;;ecom-222;;;;;;;;;;;;977856327;movistar;;;;;
+816;;ecom-226;;;;;;;;;;;;966981605;entel;;;;;
+817;;ecom-227;;;;;;;;;;;;966981057;entel;;;;;
+818;;ecom-228;;;;;;;;;;;;967361631;entel;;;;;
+831;;ecom-c31;;;;;;;;;;;;966980551;entel;;;;;
+832;;ecom-c33;;;;;;;;;;;;965464094;entel;;;;;
