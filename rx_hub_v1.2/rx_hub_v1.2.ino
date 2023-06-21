@@ -101,7 +101,7 @@ void receive() {
     Serial.println("]");
     digitalWrite(ledData, !digitalRead(ledData));
   } else {
-    //Serial.println("No Radio");
+    Serial.println("No Radio");
   }
   //  digitalWrite(ledData, !digitalRead(ledData));
 }
