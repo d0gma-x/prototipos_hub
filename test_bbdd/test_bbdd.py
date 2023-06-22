@@ -1,7 +1,9 @@
 import pandas as pd
+import os
 
 # Cargar el archivo CSV en un DataFrame de Pandas
-df = pd.read_csv('./data/semana15-06.csv', delimiter=';')
+csv_path = './data/semana23-06.csv'
+df = pd.read_csv(csv_path, delimiter=';')
 
 # Crear una lista de sintaxis SQL para actualizar los valores
 sql_updates = []
@@ -13,8 +15,9 @@ for indice, fila in df.iterrows():
     sql_update = f"UPDATE product SET mobile_number='{mobile_number}', mobile_provider='{mobile_provider}' WHERE id='{id}';"
     sql_updates.append(sql_update)
 
-# Guardar las sintaxis SQL en un archivo de texto
-with open('update_script.sql', 'w') as archivo:
+sql_path = os.path.join('data', 'update_script.sql')
+
+with open(sql_path, 'w') as archivo:
     archivo.write('\n'.join(sql_updates))
 
 print("Archivo 'update_script.sql' creado exitosamente.")
