@@ -1,11 +1,9 @@
 import pandas as pd
 import os
 
-# Cargar el archivo CSV en un DataFrame de Pandas
-csv_path = './data/semana23-06.csv'
+csv_path = './data/semana27-06.csv'
 df = pd.read_csv(csv_path, delimiter=';')
 
-# Crear una lista de sintaxis SQL para actualizar los valores
 sql_updates = []
 for indice, fila in df.iterrows():
     id = fila['id']  # Nombre de la columna que contiene el ID
